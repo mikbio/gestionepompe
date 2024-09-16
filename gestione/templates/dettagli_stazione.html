@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ stazione.nome }}</h2>
+  <p>Ubicazione: {{ stazione.ubicazione }}</p>
+  <p>Note: {{ stazione.note }}</p>
+  <a href="{% url 'modifica_stazione' stazione.id %}">Modifica Stazione</a>
+  <h3>Pompe</h3>
+  <a href="{% url 'nuova_pompa' %}?stazione_id={{ stazione.id }}">Aggiungi Nuova Pompa</a>
+  <ul>
+    {% for pompa in stazione.pompa_set.all %}
+      <li>
+        {{ pompa.modello }} ({{ pompa.numero_serie }}) - Stato: {{ pompa.get_stato_display }}
+        <a href="{% url 'modifica_pompa' pompa.id %}">Modifica</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+</body>
+</html>

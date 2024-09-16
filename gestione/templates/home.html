@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Stazioni di Sollevamento</h2>
+  <a href="{% url 'nuova_stazione' %}">Aggiungi Nuova Stazione</a>
+  <ul>
+    {% for stazione in stazioni %}
+      <li>
+        <a href="{% url 'dettagli_stazione' stazione.id %}">{{ stazione.nome }}</a>
+        <a href="{% url 'modifica_stazione' stazione.id %}">Modifica</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+</body>
+</html>
+
+<!-- gestione/templates/home.html -->
+
+

@@ -1,0 +1,37 @@
+<!-- gestione/templates/base.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Gestione Stazioni{% endblock %}</title>
+
+        <!-- ... altri tag ... -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Inserisci qui i tuoi link CSS e JavaScript -->
+</head>
+<body>
+    <header>
+<nav>
+    <ul>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'panoramica_stazioni' %}">Panoramica Stazioni</a></li>
+      <!-- Altri link -->
+    </ul>
+  </nav>
+  
+        <h1><a href="{% url 'home' %}">Gestione Stazioni di Sollevamento</a></h1>
+        {% if user.is_authenticated %}
+            <p>Benvenuto, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a></p>
+        {% else %}
+            <p><a href="{% url 'login' %}">Login</a></p>
+        {% endif %}
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2023 La tua azienda</p>
+    </footer>
+</body>
+</html>

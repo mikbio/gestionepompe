@@ -1,0 +1,59 @@
+<!-- gestione/templates/panoramica_stazioni.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Panoramica Stazioni di Sollevamento</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome Stazione</th>
+        <th>Ubicazione</th>
+        <th>Numero di Pompe</th>
+        <th>Stato Pompe</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <!-- ... altre intestazioni ... -->
+        <th>Ultimo Controllo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stazione in stazioni %}
+        <tr>
+          <!-- ... altre celle ... -->
+          <td>
+            {% with ultimo_controllo=stazione.controllo_set.last %}
+              {% if ultimo_controllo %}
+                {{ ultimo_controllo.data_controllo }}
+              {% else %}
+                Nessun controllo registrato
+              {% endif %}
+            {% endwith %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tbody>
+      {% for stazione in stazioni %}
+        <tr>
+          <td>{{ stazione.nome }}</td>
+          <td>{{ stazione.ubicazione }}</td>
+          <td>{{ stazione.pompa_set.count }}</td>
+          <td>
+            {% for pompa in stazione.pompa_set.all %}
+              <p>{{ pompa.modello }} - Stato: {{ pompa.get_stato_display }}</p>
+            {% endfor %}
+          </td>
+          <td>
+            <a href="{% url 'dettagli_stazione' stazione.id %}">Dettagli</a> |
+            <a href="{% url 'modifica_stazione' stazione.id %}">Modifica</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

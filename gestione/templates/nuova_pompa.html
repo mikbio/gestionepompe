@@ -1,0 +1,13 @@
+<!-- gestione/templates/nuova_pompa.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Aggiungi Nuova Pompa</h2>
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Salva</button>
+  </form>
+  <a href="{% url 'home' %}">Annulla</a>
+{% endblock %}

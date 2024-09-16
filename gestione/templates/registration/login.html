@@ -1,0 +1,15 @@
+<!-- gestione/templates/registration/login.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Login</h2>
+  {% if form.errors %}
+    <p>Credenziali non valide. Riprova.</p>
+  {% endif %}
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Accedi</button>
+  </form>
+{% endblock %}

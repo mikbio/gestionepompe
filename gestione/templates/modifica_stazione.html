@@ -1,0 +1,13 @@
+<!-- gestione/templates/modifica_stazione.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Modifica Stazione: {{ stazione.nome }}</h2>
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Aggiorna</button>
+  </form>
+  <a href="{% url 'dettagli_stazione' stazione.id %}">Annulla</a>
+{% endblock %}

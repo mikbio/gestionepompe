@@ -1,0 +1,13 @@
+<!-- gestione/templates/elimina_stazione.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Conferma Eliminazione</h2>
+  <p>Sei sicuro di voler eliminare la stazione "{{ stazione.nome }}"?</p>
+  <form method="post">
+      {% csrf_token %}
+      <button type="submit">Conferma</button>
+      <a href="{% url 'dettagli_stazione' stazione.id %}">Annulla</a>
+  </form>
+{% endblock %}
