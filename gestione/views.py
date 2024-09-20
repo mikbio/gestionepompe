@@ -6,6 +6,7 @@ from .forms import StazioneForm, PompaForm, ComponenteForm, ControlloForm, Ripar
 from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def home(request):
     stazioni = Stazione.objects.all()
     return render(request, 'home.html', {'stazioni': stazioni})
@@ -13,7 +14,13 @@ def home(request):
 @login_required
 def dettagli_stazione(request, stazione_id):
     stazione = get_object_or_404(Stazione, pk=stazione_id)
-    return render(request, 'dettagli_stazione.html', {'stazione': stazione}) 
+    if request.method == 'POST':
+        # Gestione della modifica delle note
+        note = request.POST.get('note', '')
+        stazione.note = note
+        stazione.save()
+        return redirect('dettagli_stazione', stazione_id=stazione.id)
+    return render(request, 'dettagli_stazione.html', {'stazione': stazione})
 
 @login_required
 def panoramica_stazioni(request):
@@ -49,18 +56,13 @@ def modifica_stazione(request, stazione_id):
 
 @login_required
 def nuova_pompa(request):
-    stazione_id = request.GET.get('stazione_id')
     if request.method == 'POST':
         form = PompaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('dettagli_stazione', stazione_id=form.cleaned_data['stazione'].id)
+            pompa = form.save()
+            return redirect('dettagli_pompa', pompa_id=pompa.id)
     else:
-        if stazione_id:
-            stazione = get_object_or_404(Stazione, pk=stazione_id)
-            form = PompaForm(initial={'stazione': stazione})
-        else:
-            form = PompaForm()
+        form = PompaForm()
     return render(request, 'nuova_pompa.html', {'form': form})
 
 
@@ -75,6 +77,21 @@ def modifica_pompa(request, pompa_id):
     else:
         form = PompaForm(instance=pompa)
     return render(request, 'modifica_pompa.html', {'form': form, 'pompa': pompa})
+
+@login_required
+def dettagli_pompa(request, pompa_id):
+    pompa = get_object_or_404(Pompa, pk=pompa_id)
+    if request.method == 'POST':
+        pompa.modello = request.POST.get('modello', pompa.modello)
+        pompa.numero_serie = request.POST.get('numero_serie', pompa.numero_serie)
+        pompa.girante = request.POST.get('girante', pompa.girante)
+        pompa.kw = request.POST.get('kw', pompa.kw)
+        pompa.prevalenza = request.POST.get('prevalenza', pompa.prevalenza)
+        pompa.posizione = request.POST.get('posizione', pompa.posizione)
+        pompa.note = request.POST.get('note', pompa.note)
+        pompa.save()
+        return redirect('dettagli_pompa', pompa_id=pompa.id)
+    return render(request, 'dettagli_pompa.html', {'pompa': pompa})    
 
 @login_required
 def elimina_stazione(request, stazione_id):

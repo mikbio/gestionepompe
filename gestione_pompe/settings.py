@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hqxehzej8o(9)*2ap$hko*)ey+z=+e%puvhmlj*dq+5gi=4xd4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['aquacons.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'

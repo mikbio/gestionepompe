@@ -2,7 +2,7 @@ from django.db import models
 
 class Stazione(models.Model):
     nome = models.CharField(max_length=100)
-    ubicazione = models.CharField(max_length=200)
+    comune = models.CharField(max_length=100, default='Comune Predefinito')
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -11,14 +11,12 @@ class Stazione(models.Model):
 class Pompa(models.Model):
     numero_serie = models.CharField(max_length=100)
     modello = models.CharField(max_length=100)
-    data_installazione = models.DateField()
-    STATO_CHOICES = [
-        ('sede', 'In Sede'),
-        ('deposito', 'In Deposito'),
-        ('officina', 'In Officina'),
-    ]
-    stato = models.CharField(max_length=10, choices=STATO_CHOICES)
-    stazione = models.ForeignKey(Stazione, on_delete=models.CASCADE)
+    girante = models.CharField(max_length=100, blank=True, null=True)
+    kw = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    prevalenza = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    posizione = models.CharField(max_length=100, blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
+    stazione = models.ForeignKey(Stazione, on_delete=models.CASCADE, related_name='pompe')
 
     def __str__(self):
         return f"{self.modello} ({self.numero_serie})"

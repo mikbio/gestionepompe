@@ -1,0 +1,15 @@
+<!-- gestione/templates/modifica_pompa.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Modifica Pompa {{ pompa.modello }}{% endblock %}
+
+{% block content %}
+    <h2>Modifica Pompa {{ pompa.modello }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Salva Modifiche</button>
+        <a href="{% url 'dettagli_pompa' pompa.id %}" class="btn btn-secondary">Annulla</a>
+    </form>
+{% endblock %}

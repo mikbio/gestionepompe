@@ -1,21 +1,39 @@
+<!-- gestione/templates/home.html -->
+
 {% extends 'base.html' %}
 
+{% block title %}Panoramica Stazioni{% endblock %}
+
 {% block content %}
-  <h2>Stazioni di Sollevamento</h2>
-  <a href="{% url 'nuova_stazione' %}">Aggiungi Nuova Stazione</a>
-  <ul>
-    {% for stazione in stazioni %}
-      <li>
-        <a href="{% url 'dettagli_stazione' stazione.id %}">{{ stazione.nome }}</a>
-        <a href="{% url 'modifica_stazione' stazione.id %}">Modifica</a>
-      </li>
-    {% endfor %}
-  </ul>
+    <h2 class="mt-4">Panoramica delle Stazioni di Sollevamento</h2>
+    {% if stazioni %}
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Comune</th>
+                    <th>Nome Stazione</th>
+                    <th>Numero di Pompe</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stazione in stazioni %}
+                    <tr>
+                        <td>{{ stazione.comune }}</td>
+                        <td>
+                            <a href="{% url 'dettagli_stazione' stazione.id %}">
+                                {{ stazione.nome }}
+                            </a>
+                        </td>
+                        <td>{{ stazione.pompe.count }}</td>
+                        <td>{{ stazione.note|default:"Nessuna nota" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nessuna stazione disponibile.</p>
+    {% endif %}
 {% endblock %}
-
-</body>
-</html>
-
-<!-- gestione/templates/home.html -->
 
 

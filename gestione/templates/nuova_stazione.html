@@ -2,12 +2,14 @@
 
 {% extends 'base.html' %}
 
+{% block title %}Aggiungi Nuova Stazione{% endblock %}
+
 {% block content %}
-  <h2>Aggiungi Nuova Stazione</h2>
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Salva</button>
-  </form>
-  <a href="{% url 'home' %}">Annulla</a>
+    <h2>Aggiungi Nuova Stazione</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Salva</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Annulla</a>
+    </form>
 {% endblock %}

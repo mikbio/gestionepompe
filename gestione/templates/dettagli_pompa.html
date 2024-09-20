@@ -1,0 +1,51 @@
+<!-- gestione/templates/dettagli_pompa.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Dettagli Pompa - {{ pompa.modello }}{% endblock %}
+
+{% block content %}
+    <h2>Dettagli Pompa - {{ pompa.modello }}</h2>
+    
+    <table class="table table-bordered">
+        <tr>
+            <th>Modello</th>
+            <td>{{ pompa.modello }}</td>
+        </tr>
+        <tr>
+            <th>Numero di Serie</th>
+            <td>{{ pompa.numero_serie }}</td>
+        </tr>
+        <tr>
+            <th>Stazione di Sollevamento</th>
+            <td>
+                <a href="{% url 'dettagli_stazione' pompa.stazione.id %}">
+                    {{ pompa.stazione.nome }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th>Girante</th>
+            <td>{{ pompa.girante|default:"N/A" }}</td>
+        </tr>
+        <tr>
+            <th>kW</th>
+            <td>{{ pompa.kw|default:"N/A" }}</td>
+        </tr>
+        <tr>
+            <th>Prevalenza</th>
+            <td>{{ pompa.prevalenza|default:"N/A" }}</td>
+        </tr>
+        <tr>
+            <th>Posizione</th>
+            <td>{{ pompa.posizione|default:"N/A" }}</td>
+        </tr>
+        <tr>
+            <th>Note</th>
+            <td>{{ pompa.note|linebreaks|default:"Nessuna nota" }}</td>
+        </tr>
+    </table>
+
+    <a href="{% url 'modifica_pompa' pompa.id %}" class="btn btn-primary">Modifica Pompa</a>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Torna alla Home</a>
+{% endblock %}
