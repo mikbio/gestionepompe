@@ -2,12 +2,14 @@
 
 {% extends 'base.html' %}
 
+{% block title %}Modifica Stazione - {{ stazione.nome }}{% endblock %}
+
 {% block content %}
-  <h2>Modifica Stazione: {{ stazione.nome }}</h2>
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Aggiorna</button>
-  </form>
-  <a href="{% url 'dettagli_stazione' stazione.id %}">Annulla</a>
+    <h2>Modifica Stazione - {{ stazione.nome }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Salva Modifiche</button>
+        <a href="{% url 'dettagli_stazione' stazione.id %}" class="btn btn-secondary">Annulla</a>
+    </form>
 {% endblock %}

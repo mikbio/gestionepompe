@@ -2,12 +2,21 @@
 
 {% extends 'base.html' %}
 
+{% block title %}Elimina Stazione - {{ stazione.nome }}{% endblock %}
+
 {% block content %}
-  <h2>Conferma Eliminazione</h2>
-  <p>Sei sicuro di voler eliminare la stazione "{{ stazione.nome }}"?</p>
-  <form method="post">
-      {% csrf_token %}
-      <button type="submit">Conferma</button>
-      <a href="{% url 'dettagli_stazione' stazione.id %}">Annulla</a>
-  </form>
+    <h2>Elimina Stazione - {{ stazione.nome }}</h2>
+    <p>Sei sicuro di voler eliminare questa stazione? Questa azione non può essere annullata.</p>
+    
+    {% if stazione.pompe.exists %}
+        <div class="alert alert-warning">
+            <strong>Attenzione!</strong> Questa stazione ha pompe associate. Eliminando la stazione, tutte le pompe saranno eliminate.
+        </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Conferma Eliminazione</button>
+        <a href="{% url 'dettagli_stazione' stazione.id %}" class="btn btn-secondary">Annulla</a>
+    </form>
 {% endblock %}

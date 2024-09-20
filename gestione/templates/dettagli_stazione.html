@@ -9,15 +9,9 @@
     <p><strong>Comune:</strong> {{ stazione.comune }}</p>
     <p><strong>Note:</strong> {{ stazione.note|default:"Nessuna nota" }}</p>
 
-    <!-- Form per modificare le note -->
-    <form method="post" class="mt-3">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_note">Modifica Note:</label>
-            <textarea name="note" id="id_note" class="form-control" rows="3">{{ stazione.note }}</textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Salva Note</button>
-    </form>
+    <!-- Pulsanti per Modificare ed Eliminare la Stazione -->
+    <a href="{% url 'modifica_stazione' stazione.id %}" class="btn btn-primary">Modifica Stazione</a>
+    <a href="{% url 'elimina_stazione' stazione.id %}" class="btn btn-danger">Elimina Stazione</a>
 
     <h3 class="mt-4">Pompe Installate</h3>
     {% if stazione.pompe.all %}
